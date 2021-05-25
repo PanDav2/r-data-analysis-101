@@ -64,6 +64,15 @@ length(y_test)
 ## Define a glm w/ the binomial data type, get a summary and give the response for each.
 glm.fit <- glm(Observed.Attendance ~ Expected.Attendance + Position.to.be.closed, family=binomial, data=train)
 summary(glm.fit)
+## How to interpret logistic regression summary?
+## It is important to look at the z value (or z-score) which is the
+## Estimate divided by its standard error. A nonsignificant z score
+## suggests a coefficient can be dropped from the model.
+## Attention! Si deux variables sont corrélées, elle peuvent mutuellement
+## influencer leur z-score au point que ce derniers soit faibles alors que les variables
+## ont une influence sur le modèle. Il faut alors de procéder itérativement:
+## Retirer la variable avec le z-score le plus faible, et recommencer
+
 probs <- predict(glm.fit, type='response')
 ## We define the threshold for the decision to be made based on the probabilities
 y <- ifelse(probs<=0.5, 'no', 'yes')
